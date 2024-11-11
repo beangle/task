@@ -1,6 +1,6 @@
 #!/bin/bash
 PRGDIR=`dirname "$0"`
-export MICDN_HOME=`cd "$PRGDIR" >/dev/null; pwd`
+export TASK_HOME=`cd "$PRGDIR" >/dev/null; pwd`
 version=`grep "version " -R dub.sdl |awk 'NR==1{gsub(/"/,"");print $2}'`
 
 mk_artifact(){
@@ -22,14 +22,14 @@ dub build --build=release-nobounds --compiler=ldc2
 mk_artifact "agent"
 mk_artifact "server"
 
-cd $MICDN_HOME
+cd $TASK_HOME
 rm -rf target
 mkdir -p target
 
 cd ~/.m2/repository
-zip  $MICDN_HOME/target/beangle-task-$version.$arch.zip org/beangle/task/beangle-task-agent/$version/beangle-task-agent-$version-$arch.bin \
+zip  $TASK_HOME/target/beangle-task-$version.$arch.zip org/beangle/task/beangle-task-agent/$version/beangle-task-agent-$version-$arch.bin \
 org/beangle/task/beangle-task-agent/$version/beangle-task-agent-$version-$arch.bin.sha1 \
 org/beangle/task/beangle-task-server/$version/beangle-task-server-$version-$arch.bin \
 org/beangle/task/beangle-task-server/$version/beangle-task-server-$version-$arch.bin.sha1
 
-gpg -ab $MICDN_HOME/target/beangle-task-$version.$arch.zip
+gpg -ab $TASK_HOME/target/beangle-task-$version.$arch.zip
